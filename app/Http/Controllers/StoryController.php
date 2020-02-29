@@ -22,7 +22,7 @@ class StoryController extends Controller
     public function index()
     {
         $stories = Story::all();
-        return view('stories', compact($stories));
+        return view('story.stories', compact('stories'));
     }
 
     /**
@@ -30,7 +30,16 @@ class StoryController extends Controller
      */
     public function create()
     {
-        return view('create');
+        return view('story.create');
+    }
+
+    public function show ($id) {
+        $story = Story::find($id);
+        if (!$story) {
+            return redirect()->back()->with('error', 'Story not found');
+        }
+        $data['story'] = $story;
+        return view('story.show', $data);
     }
 
     /**
@@ -41,11 +50,12 @@ class StoryController extends Controller
     {
         // Todo: add validation
         try {
+//            dd($request->title);
             Story::create([
                 'title' => $request->title,
                 'body' => $request->body
             ]);
-            return redirect('/stories')->with('success', 'Story is successfully saved');
+            return redirect(route('story'))->with('success', 'Story is successfully saved');
         } catch (Exception $e) {
             return back()->with('error', 'Failed to create story');
         }
@@ -63,7 +73,7 @@ class StoryController extends Controller
             return redirect()->back()->with('error', 'Story not found');
         }
         $data['story'] = $story;
-        return view('edit', $data);
+        return view('story.edit', $data);
     }
 
     /**
@@ -81,7 +91,7 @@ class StoryController extends Controller
             if (!$story) {
                 return back()->with('error', 'Story not found');
             }
-            return redirect('/stories')->with('success', 'Story is successfully saved');
+            return redirect(route('story'))->with('success', 'Story is successfully saved');
         } catch (Exception $e) {
             return back()->with('error', 'Something went wrong');
         }
@@ -99,7 +109,7 @@ class StoryController extends Controller
             if (!$story) {
                 return back()->with('error', 'Story not found');
             }
-            return redirect('/stories')->with('success', 'Story is successfully deleted');
+            return redirect(route('story'))->with('success', 'Story is successfully deleted');
         } catch (Exception $e) {
             return back()->with('error', 'Something went wrong');
         }
