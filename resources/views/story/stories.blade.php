@@ -29,7 +29,11 @@
                                 @endif
                             </p>
                             <a href="{{route('story.edit',$story->id)}}" class="btn btn-outline-primary">Edit</a>
-                            <a href="#" class="btn btn-outline-danger">Delete</a>
+                            <form method="POST" action="{{route('story.delete',$story->id)}}">
+                                @csrf
+                                @method('POST')
+                                <button class="btn btn-outline-danger">Delete</button>
+                            </form>
                         </div>
                     </div>
                 @endforeach

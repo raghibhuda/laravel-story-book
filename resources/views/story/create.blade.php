@@ -1,9 +1,9 @@
 @extends('layouts.storybook')
 @section('story_content')
     <div class="container">
-        @if(\Session::has('success'))
-            <div class="alert alert-success">
-                {{\Session::get('success')}}
+        @if(\Session::has('error'))
+            <div class="alert alert-danger">
+                {{\Session::get('error')}}
             </div>
         @endif
         <div class="row">
@@ -19,7 +19,8 @@
                     <div class="form-group row">
                         <label for="body" class="col-sm-2 col-form-label">Content</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" type="text"  rows="7" name ="body" id="body" placeholder="More about story..."></textarea>
+                            <textarea class="form-control" type="text" rows="7" name="body" id="body"
+                                      placeholder="More about story..."></textarea>
                         </div>
                     </div>
                     <div class="form-group row">

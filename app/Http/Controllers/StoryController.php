@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 /**
@@ -50,7 +51,15 @@ class StoryController extends Controller
     {
         // Todo: add validation
         try {
-//            dd($request->title);
+            $rules = [
+                'title' => 'required|max:255',
+                'body' => 'required',
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails())
+            {
+                return redirect()->back()->withInput()->with(['error' => $validator->errors()->first()]);
+            }
             Story::create([
                 'title' => $request->title,
                 'body' => $request->body
@@ -84,6 +93,15 @@ class StoryController extends Controller
     {
         // Todo: validation
         try {
+            $rules = [
+                'title' => 'required|max:255',
+                'body' => 'required|min:255',
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails())
+            {
+                return redirect()->back()->withInput()->with(['error' => $validator->errors()->first()]);
+            }
             $story = Story::where('id', $request->id)->update([
                 'title' => $request->title,
                 'body' => $request->body
@@ -114,5 +132,4 @@ class StoryController extends Controller
             return back()->with('error', 'Something went wrong');
         }
     }
-
 }

@@ -1,9 +1,9 @@
 @extends('layouts.storybook')
 @section('story_content')
     <div class="container">
-        @if(\Session::has('success'))
-            <div class="alert alert-success">
-                {{\Session::get('success')}}
+        @if(\Session::has('error'))
+            <div class="alert alert-danger">
+                {{\Session::get('error')}}
             </div>
         @endif
         <div class="row">
