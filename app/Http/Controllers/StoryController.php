@@ -34,6 +34,10 @@ class StoryController extends Controller
         return view('story.create');
     }
 
+    /**
+     * @param $id
+     * @return Factory|RedirectResponse|View
+     */
     public function show ($id) {
         $story = Story::find($id);
         if (!$story) {
@@ -49,7 +53,6 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
-        // Todo: add validation
         try {
             $rules = [
                 'title' => 'required|max:255',
@@ -91,7 +94,6 @@ class StoryController extends Controller
      */
     public function update(Request $request)
     {
-        // Todo: validation
         try {
             $rules = [
                 'title' => 'required|max:255',

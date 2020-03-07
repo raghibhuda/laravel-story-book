@@ -1,4 +1,4 @@
-@extends('story.storybook')
+@extends('layouts.storyBookMaster')
 @section('story_content')
     <div class="container">
         @if(\Session::has('success'))
